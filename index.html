@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>基于星云链的简单学籍管理系统</title>
+	<link rel="shortcut icon" href="./images/logo.jpg" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link href="./css/style.css" type="text/css" rel="stylesheet">
+	<link rel="stylesheet" href="./css/bootstrap.css"/>
+	<link rel="stylesheet" href="./dist/boostrapvalidator/css/bootstrapValidator.css"/>
+	<link href="./dist/boostraptable//bootstrap-table.min.css" rel="stylesheet" />  
+</head>
+
+<body>
+    <script type="text/javascript" src="./dist/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="./dist/boostrapvalidator/js/bootstrapValidator.js"></script>
+	
+    <script type="text/javascript" src="./dist/nebulas.js"></script>
+    <script type="text/javascript" src="./dist/nebPay.js"></script>
+    
+    <script src="./dist/bootstrap.min.js"></script>
+	
+	 <script type="text/javascript" src="./dist/boostraptable/bootstrap-table.min.js"></script>
+	 <script type="text/javascript" src="./dist/boostraptable/bootstrap-table-zh-CN.min.js"></script>
+	  <script type="text/javascript" src="./dist/nebulas.js"></script>
+
+<div style="height:106px;width:106px;float:left;>
+<div style="width:106px;height:106px;border:1px solid blue;display: table-cell;text-align: center;vertical-align: middle;">
+<img src="./images/logo.jpg" class="img-circle">
+</div>
+</div>
+
+
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div style="text-align: center">
+                    <h1>基于星云链的简单学籍管理系统</h1>
+                </div>
+<ul id="myTab" class="nav nav-pills">
+	<li class="active">
+		<a href="#home" data-toggle="tab">
+			 简介
+		</a>
+	</li>
+	<li><a href="#summit" data-toggle="tab">注册学籍</a></li>
+	<li><a href="#query" data-toggle="tab">查询学籍</a></li>
+</ul>
+
+
+<div id="myTabContent" class="tab-content">
+	<div class="tab-pane fade in active" id="home">
+		<br><p>基于区块链数据的公开，透明，不可纂改的特性，实现一个简单的学籍信息上链的学籍注册/查询系统, 确保学籍信息的真实有效，杜绝学历造假。</p>
+		<br> <p>注册学籍信息目前开发接口用于演示，同一个身份证号码可以注册多个学籍信息，考虑到实际应用中只有国家权威部门审核之后才能使用该系统注册学籍，实际产品将只允许合约的创建者有权注册学籍信息。</p>
+		<br> <p>该系统的查询接口可用于企事业单位或其他第三方机构验证员工的学历信息</p>
+		<br>
+		
+		 <p> <strong>温馨提示!</strong> 本站注册学籍功能需要星云钱包插件支持！插件安装请移步至 <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> 。请稍后刷新查看。</p>
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    <span aria-hidden="true">&times;</span>
+		  </button>
+		
+	</div>
+	<div class="tab-pane fade" id="summit">
+		<br>
+		<div class="col-lg-8 col-lg-offset-2">
+		 <form id="defaultForm" method="post" class="form-horizontal" action="target.php">
+		 
+			 <div class="form-group" style="margin-left:20px">
+				<label class="col-lg-3 control-label">姓名 *</label>
+				<div class="col-lg-6">
+                <input type="text" class="form-control" placeholder="输入姓名" required name="name" id=input_name>
+				</div>
+            </div>
+            <div class="form-group" style="margin-top:20px ;margin-left:20px">           
+				<label class="col-lg-3 control-label">性别 *</label>
+				<div class="col-lg-6">
+               <select class="form-control" id=input_sex >
+			<option>男</option>
+			<option>女</option>
+		</select>
+		</div>
+            </div>
+			<div class="form-group" style="margin-top:20px ;margin-left:20px">        
+				<label class="col-lg-3 control-label">证件号码 *</label>
+				<div class="col-lg-6">
+                <input type="text" class="form-control" placeholder="输入身份证号" name="id" id=input_id>
+				</div>
+            </div>
+            <div class="form-group" style="margin-top:20px ;margin-left:20px">            
+				<label class="col-lg-3 control-label">学校名称 *</label>
+				<div class="col-lg-6">
+                <input type="text" class="form-control" placeholder="输入学校名称" name="school" id=input_school>
+				</div>
+            </div>
+			<div class="form-group" style="margin-top:20px ;margin-left:20px">
+					<label class="col-lg-3 control-label">层次 *</label>
+					<div class="col-lg-6">
+                <select class="form-control" id=input_level>
+			<option>本科</option>
+			<option>硕士研究生</option>
+		</select>
+		</div>
+            </div>
+            <div class="form-group" style="margin-top:20px ;margin-left:20px">
+				<label class="col-lg-3 control-label">专业 *</label>
+				<div class="col-lg-6">
+                <input type="text" class="form-control" placeholder="输入专业" name="major" id=input_major>
+            </div>
+			</div>
+            <div class="form-group" style="margin-top:20px ;margin-left:20px">
+				<label class="col-lg-3 control-label">学籍状态 *</label>
+				<div class="col-lg-6">
+				<select class="form-control" id=input_status>
+			<option>不在籍（已毕业）</option>
+			<option>在籍</option>
+		</select>
+		 </div>
+            </div>
+			 <div class="form-group" style="margin-top:20px ;margin-left:20px">
+			 	<label class="col-lg-3 control-label">毕业证书编号 *</label>         
+				<div class="col-lg-6">
+                <input type="text" class="form-control" placeholder="输入毕业证书编号" name="diploma_number" id=input_diploma_number>
+            </div>
+			</div>
+			<!--<div class="form-group">
+                            <div class="col-lg-9 col-lg-offset-5">
+                                <button type="button"  class="btn btn-primary" id=save>提交</button>                             
+                            </div>
+                        </div>-->
+            <div  style="text-align: center;margin-top:20px ">
+                    <button class="btn btn-primary" type="submit">提交</button>
+            </div>
+		</form>
+		</div>
+	</div>
+	<div class="tab-pane fade" id="query">
+		<br>
+		<div class="col-lg-8 col-lg-offset-2">
+		 <form id="searchForm" method="post" class="form-horizontal" action="target.php">
+		<div class="form-group" style="margin-left:20px">
+			   <label class="col-lg-3 control-label">证件号码 *</label>
+				<div class="col-lg-6">
+              <input type="text" class="form-control" placeholder="请输入身份证号码" name="search_id" id=search_id />  
+			  </div>
+            </div>
+			
+		<div class="form-group" style="margin-top:20px ;margin-left:20px">
+		 <label class="col-lg-3 control-label">证书编号</label>
+		 <div class="col-lg-6">
+          <input type="text" class="form-control" placeholder="请输入毕业证书编号(可选填)" name="search_diploma_number" id=search_diploma_number />   
+         </div>		  
+        </div>
+		
+           <div  style="text-align: center;margin-top:20px;margin-bottom:20px ">
+                    <button class="btn btn-primary" type="submit">查询</button>
+            </div>			
+			</form>
+			</div>
+			
+			 <!--<div class="row clearfix">
+                <div class="col-md-12 column">
+                </div>
+            </div>-->
+			<div style="text-align: center;margin-top:20px ">
+    <table class="table table-striped table-hover" id="searchResultTable"></table>
+ </div> 
+
+	</div>
+</div>
+
+     <div style="text-align: center">
+	            &nbsp;&nbsp;
+                    <a href="https://nebulas.io" target="_blank">
+                        <img src="./images/nebulasx60.png" alt="Nebulas">
+                    </a>
+                <p>Copyright &copy; 2017-2018 基于星云链的简单学籍管理系统 All rights reserved</p>
+      </div>
+</div>
+</div>
+</div>
+</body>
+
+
+<script>
+    "use strict";
+    var dappContactAddress = "n1faFWiGCio1ebPzGD35DH4FeRBueMCzPJ2";
+    var nebulas = require("nebulas"), Account = Account, neb = new nebulas.Neb();
+    neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"))
+
+
+    var NebPay = require("nebpay");     //https://github.com/nebulasio/nebPay
+    var nebPay = new NebPay();
+    var serialNumber;
+    var intervalQuery;
+ 
+	$(document).ready(function() {
+	$('#defaultForm').bootstrapValidator({
+        //live: 'disabled',
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            name: {
+                validators: {
+                    notEmpty: {
+                        message: '姓名不能为空'
+                    }
+                }
+            },
+            id: {
+                validators: {
+                    notEmpty: {
+                        message: '身份证号码不能为空'
+                    }
+                }
+            },
+    
+            school: {
+                validators: {
+                    notEmpty: {
+                        message: '学校名称不能为空'
+                    }
+                }
+            },
+
+           major: {
+                validators: {
+                    notEmpty: {
+                        message: '专业不能为空'
+                    }
+                }
+            },
+
+           diploma_number: {
+                validators: {
+                    notEmpty: {
+                        message: '毕业证书编号不能为空'
+                    }
+                }
+            }  			
+			
+        }
+    })
+	.on('success.form.bv', function(e) {
+            // Prevent submit form
+            e.preventDefault();
+
+            var $form     = $(e.target),
+                validator = $form.data('bootstrapValidator');
+
+           //to-do
+        var to = dappContactAddress;
+        var value = "0";
+        var callFunction = "save";
+        var callArgs = "[\"" + $("#input_name").val() + "\",\"" + $("#input_sex").val() + "\",\"" + $("#input_id").val() + "\",\"" + $("#input_school").val() + "\",\"" + 
+		$("#input_level").val() + "\",\"" + $("#input_major").val()  + "\",\"" + $("#input_status").val() + "\",\"" + $("#input_diploma_number").val()+ "\"]";
+        console.log(callArgs);
+
+        serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
+            listener: function (resp) {
+                console.log("the callback is " + resp)
+            }
+        });
+		intervalQuery = setInterval(function () {
+            funcIntervalQuery();
+        }, 10000);
+            $form
+                .bootstrapValidator('disableSubmitButtons', false)  // Enable the submit buttons
+                .bootstrapValidator('resetForm', true);             // Reset the form
+        });
+		
+	$('#searchForm').bootstrapValidator({
+        //live: 'disabled',
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            search_id: {
+                validators: {
+                    notEmpty: {
+                        message: '身份证号码不能为空'
+                    }
+                }
+            }
+        }
+    })
+	.on('success.form.bv', function(e) {
+            // Prevent submit form
+            e.preventDefault();
+
+            var $form     = $(e.target),
+                validator = $form.data('bootstrapValidator');
+
+           //to-do
+		    var from = dappContactAddress
+        var value = "0";
+        var nonce = "0"
+        var gas_price = "1000000"
+        var gas_limit = "2000000"
+        var callFunction = "get";
+        var callArgs = "[\"" + $("#search_id").val() + "\",\"" + $("#search_diploma_number").val() + "\"]";
+        console.log(callArgs);
+        var contract = {
+            "function": callFunction,
+            "args": callArgs
+        }
+
+		$('#searchResultTable').bootstrapTable('removeAll');
+
+        neb.api.call(from, dappContactAddress, value, nonce, gas_price, gas_limit, contract).then(function (resp) {
+            var result = resp.result;
+            
+            if (result === '[]') {
+                alert(`没有查询到该身份证号码对应的学籍信息！`)
+                return;
+            }
+            console.log(result);
+            result = JSON.parse(result);
+			//for(i in result)
+			//{
+			//    var item = result[i];
+			//	
+			//}
+			$('#searchResultTable').bootstrapTable('append',result);    
+		
+            
+        }).catch(function (err) {
+            console.log("error :" + err.message);
+
+        })
+		
+            $form
+                .bootstrapValidator('disableSubmitButtons', false)  // Enable the submit buttons
+                .bootstrapValidator('resetForm', true);             // Reset the form
+        });
+		
+	 $('#searchResultTable').bootstrapTable({
+                method: 'post',
+                editable:false,//开启编辑模式
+                clickToSelect: false,
+                showPaginationSwitch:false, //显示分页切换按钮 
+                search: false,  //显示检索框
+                showRefresh: false,  //显示刷新按钮
+                showToggle:false, //显示切换按钮来切换列表/卡片视图
+                pagination: false,  
+                pageList: [5,25],  
+                pageSize:5,  
+                pageNumber:1,  
+				columns: [[
+                    {field:"name",title:"姓名",align:"center"},
+					{field:"sex",title:"性别",align:"center"},
+                    {field:"id_number",title:"证件号码",align:"center"},
+					{field:"school_name",title:"学校名称",align:"center"},
+					{field:"level",title:"层次",align:"center"},
+					{field:"major",title:"专业",align:"center"},
+					{field:"status",title:"学籍状态",align:"center"},
+					{field:"diploma_number",title:"毕业证书编号",align:"center"}
+					]]
+	 });
+});
+
+function funcIntervalQuery() {
+        nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
+            .then(function (resp) {
+                console.log("tx result: " + resp)   //resp is a JSON string
+                var respObject = JSON.parse(resp)
+                if(respObject.code === 0){
+                    alert(`提交成功！`)
+                    clearInterval(intervalQuery)
+                }
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }
+
+    function cbPush(resp) {
+        console.log("response of push: " + JSON.stringify(resp))
+    }
+</script>
+
+
+</html>
